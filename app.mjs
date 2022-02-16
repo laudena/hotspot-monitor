@@ -4,11 +4,25 @@ const MAX_ATTEMPTS = 4;
 var order = ['1st', '2nd', '3rd', '4th', 'Last attempt'];
 //?cursor=eyJ0eXBlcyI6WyJjb2luYmFzZV92MSIsInNlY3VyaXR5X2NvaW5iYXNlX3YxIiwib3VpX3YxIiwic3RhdGVfY2hhbm5lbF9vcGVuX3YxIiwic3RhdGVfY2hhbm5lbF9jbG9zZV92MSIsImdlbl9nYXRld2F5X3YxIiwicm91dGluZ192MSIsInBheW1lbnRfdjEiLCJzZWN1cml0eV9leGNoYW5nZV92MSIsImNvbnNlbnN1c19ncm91cF92MSIsImFkZF9nYXRld2F5X3YxIiwiYXNzZXJ0X2xvY2F0aW9uX3YxIiwiYXNzZXJ0X2xvY2F0aW9uX3YyIiwiY3JlYXRlX2h0bGNfdjEiLCJyZWRlZW1faHRsY192MSIsInBvY19yZXF1ZXN0X3YxIiwicG9jX3JlY2VpcHRzX3YxIiwidmFyc192MSIsInJld2FyZHNfdjEiLCJyZXdhcmRzX3YyIiwidG9rZW5fYnVybl92MSIsImRjX2NvaW5iYXNlX3YxIiwidG9rZW5fYnVybl9leGNoYW5nZV9yYXRlX3YxIiwicGF5bWVudF92MiIsInByaWNlX29yYWNsZV92MSIsInRyYW5zZmVyX2hvdHNwb3RfdjEiLCJ0cmFuc2Zlcl9ob3RzcG90X3YyIiwic3Rha2VfdmFsaWRhdG9yX3YxIiwidW5zdGFrZV92YWxpZGF0b3JfdjEiLCJ0cmFuc2Zlcl92YWxpZGF0b3Jfc3Rha2VfdjEiLCJ2YWxpZGF0b3JfaGVhcnRiZWF0X3YxIiwiY29uc2Vuc3VzX2dyb3VwX2ZhaWx1cmVfdjEiXSwibWluX2Jsb2NrIjoxMjA1OTA0LCJtYXhfYmxvY2siOjEyMjY0NDEsImJsb2NrIjoxMjI2NDAwLCJhbmNob3JfYmxvY2siOjEyMjY0MDB9
 
-let data = getData(baseUrl, 0);
+var http = require("http"),
+port = 3000;
 
-function getData(url, attempt) {
+http.createServer(function(request, response) {
 
-  if (attempt > MAX_ATTEMPTS){
+
+  let data = getData(baseUrl, 0, response);
+
+
+}).listen(parseInt(port, 10));
+
+console.log("file server running at\n  => http://localhost:" + port + "/\nCTRL + C to shutdown");
+
+
+function getData(url, attempt, response) {
+
+  if (attempt == undefined )
+    attempt = 0;
+  if (attempt > MAX_ATTEMPTS) {
     return null;
   }
 
@@ -29,10 +43,12 @@ function getData(url, attempt) {
         };
 
         console.log(result);
-        return result;
+        response.writeHead(200);
+        response.write(JSON.stringify(result), "application/json");
+        response.end();
       }
       else {
-        getData(baseUrl + "?cursor=" + obj.cursor, attempt + 1);
+        getData(baseUrl + "?cursor=" + obj.cursor, attempt + 1, response);
       }
     })
     .catch(error => console.log(error));
