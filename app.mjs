@@ -1,5 +1,5 @@
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
+//import { createRequire } from 'module';
+//const require = createRequire(import.meta.url);
 const fetch = require('node-fetch');
 const baseUrl = 'https://helium-api.stakejoy.com/v1/hotspots/11BG2B1JMTyTTYQvcsoBHsTBvYAkQpYajmitAXPQwCvm8pPqo6F/roles';
 const MAX_ATTEMPTS = 4;
@@ -49,8 +49,8 @@ function getData(url, attempt, response) {
 
         console.log(result);
         response.writeHead(200);
-        response.write("<html> <body> <pre> <code>");
-        response.write(JSON.stringify(result));
+        response.write("<html> <body> <pre style='font-size: large;'> <code>");
+        response.write(JSON.stringify(result, undefined, 2));
         response.write(" </code></pre> </body> </html>");
         response.end();
       }
