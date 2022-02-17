@@ -49,7 +49,7 @@ function getData(url, attempt, response) {
 
         console.log(result);
         response.writeHead(200);
-        response.write("<html> <body> <pre style='font-size: large;'> <code>");
+        response.write("<html> <body> <pre style='font-size: 3.5em;'> <code>");
         response.write(JSON.stringify(result, undefined, 2));
         response.write(" </code></pre> </body> </html>");
         response.end();
