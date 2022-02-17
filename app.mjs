@@ -49,7 +49,9 @@ function getData(url, attempt, response) {
 
         console.log(result);
         response.writeHead(200);
+        response.write("<html> <body> <pre> <code>");
         response.write(JSON.stringify(result));
+        response.write(" </code></pre> </body> </html>");
         response.end();
       }
       else {
