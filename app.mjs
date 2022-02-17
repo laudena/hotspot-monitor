@@ -49,7 +49,7 @@ function getData(url, attempt, response) {
 
         console.log(result);
         response.writeHead(200);
-        response.write(JSON.stringify(result), "application/json");
+        response.write(JSON.stringify(result));
         response.end();
       }
       else {
