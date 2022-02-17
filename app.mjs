@@ -1,3 +1,5 @@
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 const fetch = require('node-fetch');
 const baseUrl = 'https://helium-api.stakejoy.com/v1/hotspots/11BG2B1JMTyTTYQvcsoBHsTBvYAkQpYajmitAXPQwCvm8pPqo6F/roles';
 const MAX_ATTEMPTS = 4;
@@ -36,10 +38,13 @@ function getData(url, attempt, response) {
     .then(obj => {
       if (typeof obj.data !== 'undefined' && obj.data.length > 0) {
         console.log('retrieved data successfully\n');
+        let reward = toLocalTime(findInArray(obj.data, "role", "reward_gateway")[0] ? findInArray(obj.data, "role", "reward_gateway")[0].time : '');
+        let witness = toLocalTime(findInArray(obj.data, "role", "witness")[0] ? findInArray(obj.data, "role", "witness")[0].time : '');
+        let challengee = toLocalTime(findInArray(obj.data, "role", "challengee")[0]? findInArray(obj.data, "role", "challengee")[0].time : '');
         let result = {
-          "reward_gateway": toLocalTime(findInArray(obj.data, "role", "reward_gateway")[0].time),
-          "wintness": toLocalTime(findInArray(obj.data, "role", "witness")[0].time),
-          "challengee": toLocalTime(findInArray(obj.data, "role", "challengee")[0].time)
+          "reward_gateway": reward,
+          "wintness": witness,
+          "challengee": challengee
         };
 
         console.log(result);
