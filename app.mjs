@@ -1,5 +1,5 @@
-//import { createRequire } from 'module';
-//const require = createRequire(import.meta.url);
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 const fetch = require('node-fetch');
 const baseUrl = 'https://helium-api.stakejoy.com/v1/hotspots/11BG2B1JMTyTTYQvcsoBHsTBvYAkQpYajmitAXPQwCvm8pPqo6F/roles';
 const MAX_ATTEMPTS = 4;
