@@ -15,7 +15,7 @@ http.createServer(function(request, response) {
   let data = getData(baseUrl, 0, response);
 
 
-}).listen(parseInt(port, 10));
+}).listen(process.env.PORT || parseInt(port, 10));
 
 console.log("file server running at\n  => http://localhost:" + port + "/\nCTRL + C to shutdown");
 
